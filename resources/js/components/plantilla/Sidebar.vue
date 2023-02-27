@@ -2,14 +2,14 @@
     <div>
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="../../index3.html" class="brand-link">
-                <img
+            <a href="/home" class="brand-link text-decoration-none">
+                <!-- <img
                     :src="ruta + '/img/AdminLTElogo.png'"
                     alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3"
                     style="opacity: 0.8"
-                />
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
+                /> -->
+                <span class="brand-text font-weight-succes">WOW Reconocimientos</span>
             </a>
 
             <!-- Sidebar -->
@@ -24,7 +24,7 @@
                         />
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+                        <a href="#" class="d-block">Administrador</a>
                     </div>
                 </div>
 
@@ -37,7 +37,7 @@
                         data-accordion="false"
                     >
                         <li class="nav-item">
-                            <router-link :to="'/'" class="nav-link active">
+                            <router-link :to="'/index'" class="nav-link ">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard
@@ -45,7 +45,7 @@
                                 </p>
                             </router-link>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon far fa-envelope"></i>
                                 <p>
@@ -73,45 +73,77 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> -->
+                        <!-- <li class="nav-header">ADMINISTRACIÓN</li> -->
 
-                        <li class="nav-header">ACCIONES</li>
-                        <li class="nav-item">
-                            <router-link
-                                :to="'/colaboradores'"
-                                class="nav-link"
-                            >
-                                <i class="nav-icon far fa-image"></i>
-                                <p>Importar colaboradores</p>
+                        <!-- <li class="nav-item">
+                            <router-link :to="'/usuarios'" class="nav-link">
+                                <i class="nav-icon fas fa-columns"></i>
+                                <p>Usuaios</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
+                            <router-link :to="'/reportes'" class="nav-link">
+                                <i class="nav-icon fas fa-columns"></i>
+                                <p>Roles</p>
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link :to="'/reportes'" class="nav-link">
+                                <i class="nav-icon fas fa-columns"></i>
+                                <p>Permisos</p>
+                            </router-link>
+                        </li> -->
+                        <li class="nav-header">ACCIONES</li>
+
+                        <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon far fa-calendar-alt"></i>
+                                <!-- <i class="nav-icon far fa-envelope"></i> -->
+                                <i class=" nav-icon fas fa-users"></i>
                                 <p>
-                                    Ver colaboradores
-                                    <!-- <span class="badge badge-info right"
-                                        >2</span 
-                                    >-->
+                                    Colaboradores
+                                    <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <router-link
+                                        :to="'/colaboradores'"
+                                        class="nav-link"
+                                    >
+                                        <!-- <i class="nav-icon far fa-image"></i> -->
+                                        <i class="nav-icon fas fa-user-check"></i>
+                                        <p>Ver colaboradores</p>
+                                    </router-link>
+                                </li>
+                                <li class="nav-item">
+                                    <router-link
+                                        :to="'/importar-colaboradores'"
+                                        class="nav-link"
+                                    >
+                                        <!-- <i class="nav-icon far fa-image"></i> -->
+                                        <i class="nav-icon fas fa-file-import"></i>
+                                        <p>Importar colaboradores</p>
+                                    </router-link>
+                                </li>
+                            </ul>
                         </li>
+                        
                         <li class="nav-item">
                             <router-link
                                 :to="'/reconocimientos'"
                                 class="nav-link"
                             >
-                                <i class="nav-icon fas fa-columns"></i>
+                                <!-- <i class="nav-icon fas fa-columns"></i> -->
+                                <i class="nav-icon fas fa-trophy"></i>
                                 <p>Reconocimientos</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
-                        
-                            <router-link
-                                :to="'/reportes'"
-                                class="nav-link"
-                            >
-                            <i class="nav-icon fas fa-columns"></i>
+                            <router-link :to="'/reportes'" class="nav-link">
+                                <!-- <i class="nav-icon fas fa-columns"></i> -->
+                                <!-- <i class="nav-icon fa-light fa-folder-open"></i> -->
+                                <i class="nav-icon far fa-folder-open"></i>
                                 <p>Reportes</p>
                             </router-link>
                         </li>

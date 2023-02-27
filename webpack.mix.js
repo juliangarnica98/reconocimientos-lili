@@ -13,9 +13,4 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .vue()
-    .sass('resources/sass/app.scss', 'public/css')
-    .styles(['resources/vendor/css/all.min.css','resources/vendor/css/adminlte.min.css'], 'public/css/plantilla.css')
-    .scripts(['resources/vendor/js/jquery.min.js','resources/vendor/js/demo.js','resources/vendor/js/adminlte.min.js','resources/vendor/js/bs-custom-file-input.min.js'],'public/js/plantilla.js')
-    .copy('resources/vendor/fontawesome/webfonts','public/webfonts')
-    .copy('resources/vendor/img','public/img');
-
+    .sass('resources/sass/app.scss', 'public/css');

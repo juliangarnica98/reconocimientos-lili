@@ -8,6 +8,14 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+// import { ElNotification } from 'element-plus';
+
+window.Vue.use(ElementUI);
+// window.Vue.use(ElNotification);
+
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -21,6 +29,10 @@ window.Vue = require('vue').default;
 
 
 Vue.component('app-component', require('./components/App.vue').default);
+Vue.component('index-component', require('./components/PageInit.vue').default);
+Vue.component('login-component', require('./components/auth/Login.vue').default);
+Vue.component('navbar-component', require('./components/principal/Navbar.vue').default);
+Vue.component('footer-component', require('./components/principal/Footer.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -1,0 +1,12 @@
+.btn{
+    border-radius: 25px;
+}
+.btn-with-25{
+    width: 20% !important; 
+}
+.el-select{
+    width: 100% !important;
+}
+body{
+    font-size: 0.9rem;
+}

@@ -5,10 +5,19 @@ Vue.use(Router)
 
 export default new Router({
     routes: [
-        { path: '/', component: require('./components/modulos/dashboard/index').default },
+
+        { path: '/', component: require('./components/principal/index').default },
+        { path: '/registrar-reconocimiento', component: require('./components/principal/index2').default },
+        // { path: '/login', component: require('./components/auth/login').default },
+
+        { path: '/index', component: require('./components/modulos/dashboard/index').default },
         { path: '/colaboradores', component: require('./components/modulos/colaboradores/index').default },
         { path: '/reconocimientos', component: require('./components/modulos/reconocimientos/index').default },
         { path: '/reportes', component: require('./components/modulos/reportes/index').default },
+
+        { path: '/usuarios', component: require('./components/modulos/usuarios/index').default },
+        { path: '/usuarios/create', component: require('./components/modulos/usuarios/create').default },
     ],
-    mode:'history'
+    mode:'history',
+    linkActiveClass:'active'
 })

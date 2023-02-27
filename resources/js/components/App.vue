@@ -5,7 +5,7 @@
 
         <div>
             <div class="content-wrapper">
-                <transition name="slide-fade" mode="out-in ">
+                <transition name="slide-fade" mode="in-out">
                     <router-view></router-view>
                 </transition>
             </div>
