@@ -10,9 +10,11 @@ window.Vue = require('vue').default;
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import VueSweetalert2 from 'vue-sweetalert2';
 // import { ElNotification } from 'element-plus';
 
 window.Vue.use(ElementUI);
+window.Vue.use(VueSweetalert2);
 // window.Vue.use(ElNotification);
 
 

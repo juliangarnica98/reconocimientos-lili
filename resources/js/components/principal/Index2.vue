@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <div class="contenedor pt-5" >
+            <div class="contenedor pt-3" >
                     <div class="content-header pt-5">
                         <div class="container-fluid">
                             <div class="row">
@@ -14,35 +14,43 @@
                     <div class="content">
                         <div class="">
                 
-                            <img class="w-100 card-img-top" v-bind:src="image1"  alt=""/>
-                            <div class="card-body">
+                            
+                            <div class="card-body pt-5 box">
                                 <div class="row d-flex justify-content-center">
                                     <div class="col-md-8 ">
                                         <div class="container-fluid">
+
+                                            <h4 class="text-center"> 
+                                                <strong> ¡Es momento de reconocer!</strong>
+                                            </h4>
                                             <div class="card card-info">
                                             
                                                 <form>
-                                                    <div class="card-header">
+                                                    <!-- <div class="card-header">
                                                         <h3 class="card-title">
-                                                            Nuevo reconocimiento
+                                                            
                                                         </h3>
-                                                    </div>
+                                                    </div> -->
                                                     <div id="reconocimiento_detail1" v-if="activePhase == 1">
                                                         <div class="card-body">
                                                             <div class="row d-flex justify-content-center">
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-8 pt-2">
                                                                     <div class="form-group row">
                                                                         <label class="col-md-3 col-form-label">Ingresa tu cedula</label>
                                                                         <div class="col-md-9">
-                                                                            <input type="text" class="form-control"/>
+                                                                            <input type="text" class="form-control" v-model="cedula" />
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <label class="col-md-3 col-form-label">Nombre</label>
                                                                         <div class="col-md-9">
-                                                                            <input type="text" class="form-control"  readonly/>
+                                                                            <input type="text" class="form-control" v-model="nombre_colaborador" readonly/>
                                                                         </div>
                                                                     </div>
+                                                                    <!-- <input type="text" v-model="val_cedula"> -->
+                                                                </div>
+                                                                <div class="col-md-4 text-center">
+                                                                    <img class="w-50 card-img-top" v-bind:src="image2"  alt=""/>
                                                                 </div>
                                                              
                                                             </div>
@@ -50,7 +58,7 @@
                                                         </div>
                                                         <div class="card-footer">
                                                             <div  class="row d-flex justify-content-center">
-                                                                <button class="btn btn-info">
+                                                                <button class="btn btn-info" @click.prevent="setColaborador">
                                                                     Buscar
                                                                 </button>
                                                                 <button class="btn btn-default ml-5" @click.prevent="nextStep(2)">
@@ -63,20 +71,27 @@
                                                     <div id="reconocimiento_detail2" v-if="activePhase == 2">
                                                         <div class="card-body">
                                                             <div class="row d-flex justify-content-center" >
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-8 pt-2">
                                                                     <div class="form-group row">
                                                                         <label class="col-md-3 col-form-label">Area</label>
                                                                         <div class="col-md-9">
-                                                                            <el-select v-model="area"  placeholder="Seleccione un area" clearable>
+                                                                            <el-select v-model="area" @change="onChange($event)"  placeholder="Seleccione un area" clearable >
                                                                                 <el-option v-for="item in listAreas" :key="item.value" :label="item.label" :value="item.value">
                                                                                 </el-option>
                                                                             </el-select>
+                                                                            <!-- <input type="text" v-model="area"> -->
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <label class="col-md-3 col-form-label">Nombre de colaborador</label>
                                                                         <div class="col-md-9">
-                                                                            <input type="text" class="form-control" />
+                                                                            <input type="text" class="form-control" v-model="colaborador" @input="change" :readonly="area==''"/>
+                                                                            <div v-if="colaborador !=''">
+                                                                                <ul v-if="mostrar" class="autocomplete-ul">
+                                                                                    <li @click="click(index)" v-for="(item,index) in resultado" :key=index>{{ item }}</li>
+                                                                                </ul>
+                                                                            </div>
+                                                                            
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row"> 
@@ -88,6 +103,10 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                <div class="col-md-4 text-center">
+                                                                    <img class="w-50 card-img-top" v-bind:src="image3"  alt=""/>
+                                                                </div>
+                                                                <!-- <input type="text" v-model="mostrar"> -->
                                                                
                                                             </div>
                                                  
@@ -106,27 +125,54 @@
                                                     </div>
                                                     <div id="reconocimiento_detail3" v-if="activePhase == 3">
                                                         <div class="card-body">
-                                                            <label class="col-md-12 col-form-label text-center">Comportamientos</label>
+                                                            <label class="col-md-12 col-form-label text-center">Comportamientos organizacionales </label>
                                                             <div class="row ">
                                                                 
-                                                                <div class="col-md-8">
+                                                                <div class="col-md-8 pt-2">
                                                                     
                                                                     <!-- <input type="text" v-model="competencia"> -->
                                                                     <div v-if="competencia=='Comunicamos e Inpiramos'">
-                                                                        <el-checkbox-group  v-model="comportamientos" >
-                                                                            <el-checkbox v-for="index in listComportamientoComunicacion" :label="index.label" :value="index.value" :key="index.label">{{ index.label }}</el-checkbox>
-                                                                        </el-checkbox-group>
+                                                                        <label for="col-md-12 col-form-label text-center" v-text="competencia"></label>
+                                                                        <div class="form-check" v-for="(item,index) in listComportamientoComunicacion" :key="index">
+                                                                            
+                                                                            <input class="form-check-input" type="checkbox" :value="item.value" v-model="ListComportamientos">
+                                                                            <label class="form-check-label" for="flexCheckDefault">
+                                                                            {{ item.label }}
+                                                                                </label>
+                                                                        </div >
                                                                     </div>
+
+
                                                                     <div v-if="competencia=='Ganamos en equipo'">
-                                                                        <el-checkbox-group  v-model="comportamientos" >
-                                                                            <el-checkbox v-for="index in listComportamientoEquipo" :label="index.label" :value="index.value" :key="index.label">{{ index.label }}</el-checkbox>
-                                                                        </el-checkbox-group>
+                                                                        <label for="col-md-12 col-form-label text-center" v-text="competencia"></label>
+                                                                        <!-- <el-checkbox-group  v-model="ListComportamientos" class="form-check">
+                                                                            <el-checkbox class="form-check-input" v-for="index in listComportamientoEquipo" :label="index.label" :value="index.value" :key="index.label">{{ index.label }}</el-checkbox>
+                                                                        </el-checkbox-group> -->
+
+                                                                        <div class="form-check" v-for="(item,index) in listComportamientoEquipo" :key="index">
+                                                                            
+                                                                            <input class="form-check-input" type="checkbox" :value="item.value" v-model="ListComportamientos">
+                                                                            <label class="form-check-label" for="flexCheckDefault">
+                                                                            {{ item.label }}
+                                                                                </label>
+                                                                        </div >
                                                                     </div>
                                                                     <div v-if="competencia=='Pasión por los resultados'">
-                                                                        <el-checkbox-group  v-model="comportamientos" >
-                                                                            <el-checkbox v-for="index in listComportamientoPasion" :label="index.label" :value="index.value" :key="index.label">{{ index.label }}</el-checkbox>
-                                                                        </el-checkbox-group>
+                                                                        <label for="col-md-12 col-form-label text-center" v-text="competencia"></label>
+                                                                        <!-- <el-checkbox-group  v-model="ListComportamientos" class="form-check">
+                                                                            <el-checkbox class="form-check-input"  v-for="index in listComportamientoPasion" :label="index.label" :value="index.value" :key="index.label">{{ index.label }}</el-checkbox>
+                                                                        </el-checkbox-group> -->
+                                                                        <div class="form-check" v-for="(item,index) in listComportamientoPasion" :key="index">
+                                                                            
+                                                                            <input class="form-check-input" type="checkbox" :value="item.value" v-model="ListComportamientos">
+                                                                            <label class="form-check-label" for="flexCheckDefault">
+                                                                            {{ item.label }}
+                                                                                </label>
+                                                                        </div >
                                                                     </div>
+                                                                </div>
+                                                                <div class="col-md-4 text-center">
+                                                                    <img class="w-50 card-img-top" v-bind:src="image4"  alt=""/>
                                                                 </div>
                                                                 
                                                             </div>
@@ -147,13 +193,16 @@
                                                     <div id="reconocimiento_detail4" v-if="activePhase == 4">
                                                         <div class="card-body">
                                                             <div class="row d-flex justify-content-center">
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-8 pt-2">
                                                                     <div class="form-group row">
-                                                                        <label class="col-md-3 col-form-label">Mensaje para el colaborador</label>
+                                                                        <label class="col-md-3 col-form-label">Mensaje para tu compañero</label>
                                                                         <div class="col-md-9">
-                                                                            <textarea class="form-control" rows="3"></textarea>
+                                                                            <textarea v-model="mensaje" class="form-control" rows="3"></textarea>
                                                                         </div>
                                                                     </div>
+                                                                </div>
+                                                                <div class="col-md-4 text-center">
+                                                                    <img class="w-50 card-img-top" v-bind:src="image5"  alt=""/>
                                                                 </div>
                                                                
                                                             </div>
@@ -164,7 +213,7 @@
                                                                 <button class="btn btn-info" @click.prevent="prevStep(3)">
                                                                     Anterior
                                                                 </button>
-                                                                <button class="btn btn-default ml-5">
+                                                                <button class="btn btn-default ml-5"  @click.prevent="setReconocimineto">
                                                                     Enviar
                                                                 </button>
                                           
@@ -180,6 +229,13 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- <div class="w-100 card-img-top" id="viewer" style="width: 100vw; height: 100vh;"/></div> -->
+                            <div class="container pb-3">
+                                <img :src="image1" class="w-100 img-fluid" alt="">
+                            </div>
+
+                            
                         </div>
                     </div>
                   
@@ -187,6 +243,7 @@
             </div>
         </div>
     </div>
+    
 
 </template>
 
@@ -197,11 +254,28 @@ export default {
     
     data() {
         return {
-            image1:'./images/ejemplo.jpg',
+            //variables imagenes
+            image1:'./images/photo.jpeg',
+            image2:'./images/reconimiento1.png',
+            image3:'./images/reconocimineto1.png',
+            image4:'./images/reconocimineto2.png',
+            image5:'./images/reconocimineto3.png',
+
+            //variables de validacion
             activePhase:1,
+            mostrar:false,
+            btn_sig:true,
+            val_cedula:"",
+
+            //variables de formulario
             area:"",
+            nombre_colaborador:"",
+            colaborador:"",
             competencia:"Comunicamos e Inpiramos",
-            comportamientos :[],
+            cedula:"",
+            mensaje:"",
+            
+            //listas
             listAreas: [
                 { value: "Cedi", label: "Cedi" },
                 { value: "Administrativo", label: "Administrativo" },
@@ -232,16 +306,132 @@ export default {
                 { value: "Tiene empatía y mantiene un buen ambiente laboral.", label: "Tiene empatía y mantiene un buen ambiente laboral." },
                 { value: "Comparte prácticas y procesos para resultados de compañía.", label: "Comparte prácticas y procesos para resultados de compañía." },
                 { value: "Fomenta discusiones productivas.", label: "Fomenta discusiones productivas." },
-            ]
-
+            ],
+            ListComportamientos :[],
+            items:[],
+           
         };
     },
     methods:{
         nextStep(step){
-            this.activePhase = step; 
+            if (step==2 && this.nombre_colaborador!=""  ) {
+                
+                if (this.val_cedula==this.cedula) {
+                    this.activePhase = step; 
+                } else {
+                    Vue.swal('Error en la cedula','', 'error');
+                }
+                
+            } else if(step==3 && this.area!="" && this.colaborador!=""){
+                var x = this.items.indexOf(this.colaborador);
+                if (x != -1) {
+                    this.activePhase = step; 
+                } else {
+                    Vue.swal('Error en el nombre del colaborador','', 'error');
+                }     
+            }  else if(step==4 && this.ListComportamientos.length !=0){
+                this.activePhase = step; 
+            }  else {
+                console.log(this.ListComportamientos.length);
+                Vue.swal('Hay campos vacios','', 'error');
+            }
+           
+            
         },
         prevStep(step){
             this.activePhase = step; 
+        },
+        setReconocimineto() {
+            if (this.colaborador != this.nombre_colaborador) {
+                if(this.mensaje!=""){
+                var url = "reconocimiento/setReconocimineto";
+                axios.post(url, {
+                    
+                        nombre_colaborador: this.nombre_colaborador,
+                        area: this.area,
+                        competencia: this.competencia,
+                        mensaje:this.mensaje,
+                        ListComportamientos:this.ListComportamientos,
+                        colaborador:this.colaborador,
+                       
+                    })
+                    .then((response) => {
+                        console.log("hola");
+                    });
+                }else{
+                    Vue.swal('El mensaje es obligatorio','', 'error');
+                }
+            }else{
+                Vue.swal('No se puede autoreconocer','', 'error');
+            }
+
+            
+           
+        },
+        setColaborador(){
+            var url = "reconocimiento/setColaborador";
+                axios.get(url, {
+                        params: {
+                            cedula: this.cedula,
+                        },
+                    })
+                    .then((response) => {
+                        this.nombre_colaborador=response.data
+                        this.val_cedula=this.cedula
+                    })
+                    .catch(error => {
+                        this.nombre_colaborador=""
+                        Vue.swal('No se ha encontrado el colaborador','', 'error');
+                        // this.btn_sig=false;
+                    });
+        },
+        change(){
+            if(!this.mostrar){
+                this.mostrar=true;
+            }
+        },
+        click(index){
+            this.$emit('seleccionado',this.resultado[index]);
+            this.colaborador =this.resultado[index];
+            this.mostrar=false;
+        },
+        onChange() {
+            var url = "reconocimiento/getColaboradores";
+            axios.get(url, {
+                        params: {
+                            area: this.area,
+                        },
+                    })
+                    .then((response) => {
+                        // console.log(this.items);
+                        // console.log(response.data);
+                        this.items = response.data;
+                        this.colaborador="";
+                    });
+        }
+    },
+    watch:{
+        // cedula:{
+        //     handler(newValue, oldValue) { 
+        //         console.log(newValue);
+        //         console.log(oldValue);
+        //         console.log(newValue, oldValue);
+        //         if (newValue == oldValue ) {
+        //             this.passCed= true;
+        //         }
+                
+        //     },
+      
+        // }
+        
+    },
+    computed:{
+        resultado(){
+            return this.items.filter(
+                elem =>{
+                    return elem.toLowerCase().includes(this.colaborador.toLowerCase());
+                }
+            )
         }
     }
 };
@@ -254,5 +444,22 @@ export default {
     .btn{
         width: 25%;
     }
-
+    .autocomplete-ul{  
+        border-radius: 5px;
+        z-index: 100;
+        border: 1px solid #c4c4c4;
+    }
+    .autocomplete-ul li{
+        cursor: pointer;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        list-style-type: none ;
+        transition: all 0.1s;
+        border-radius: 5px;
+    }
+    .autocomplete-ul li:hover{
+        transform:scale(1.1);
+       // background-color:#eb9fcb ;
+    }
+   
 </style>

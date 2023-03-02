@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Administracion;
 
 use App\Http\Controllers\Controller;
+use App\Imports\CollaboratorsImport;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
+
+    //funcion pruba listar usuarios
     public function getListUsuarios(Request $request){
 
 
@@ -26,6 +30,8 @@ class UserController extends Controller
 
         return response()->json($users);
     }
+
+    //funcion pruba crear usuarios
     public function setCreateUser(Request $request){
         // dd($request->all());
         if(!$request->ajax()) return redirect('/');
@@ -51,4 +57,7 @@ class UserController extends Controller
 
         return response()->json(['success' => 'Se ha creado el usuario correctamente']);
     }
+
+
+
 }

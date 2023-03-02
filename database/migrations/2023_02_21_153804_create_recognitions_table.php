@@ -17,13 +17,13 @@ class CreateRecognitionsTable extends Migration
             $table->id();
 
             $table->string('message');
-            $table->string('hehaviors');
+            $table->text('hehaviors');
+            $table->string('skills');
+
+            $table->string('name_collaborator');
 
             $table->bigInteger('collaborator_id')->unsigned()->required();
             $table->foreign('collaborator_id')->references('id')->on('collaborators');
-
-            $table->bigInteger('skill_id')->unsigned()->required();
-            $table->foreign('skill_id')->references('id')->on('skills');
 
             $table->timestamps();
         });

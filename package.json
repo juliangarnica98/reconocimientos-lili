@@ -24,7 +24,9 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "@photo-sphere-viewer/core": "^5.1.1",
         "element-ui": "^2.15.13",
-        "vue-router": "^3.6.5"
+        "vue-router": "^3.6.5",
+        "vue-sweetalert2": "^5.0.5"
     }
 }

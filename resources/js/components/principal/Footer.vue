@@ -1,65 +1,46 @@
 <template>
     <div>
-        <footer class="text-center text-white" style="background-color: #d47db2;">
+        <footer class="text-center text-white bg-black" >
             <!-- Grid container -->
-            <div class="container pt-4">
+            <div class=" pt-4">
               <!-- Section: Social media -->
               <section class="mb-4">
-                <!-- Facebook -->
-                <a
-                  class="btn btn-link btn-floating btn-lg text-dark m-1"
-                  href="#!"
-                  role="button"
-                  data-mdb-ripple-color="dark"
-                  ><i class="fab fa-facebook-f"></i
-                ></a>
-          
-                <!-- Twitter -->
-                <a
-                  class="btn btn-link btn-floating btn-lg text-dark m-1"
-                  href="#!"
-                  role="button"
-                  data-mdb-ripple-color="dark"
-                  ><i class="fab fa-twitter"></i
-                ></a>
-          
-                <!-- Google -->
-                <a
-                  class="btn btn-link btn-floating btn-lg text-dark m-1"
-                  href="#!"
-                  role="button"
-                  data-mdb-ripple-color="dark"
-                  ><i class="fab fa-google"></i
-                ></a>
-          
-                <!-- Instagram -->
-                <a
-                  class="btn btn-link btn-floating btn-lg text-dark m-1"
-                  href="#!"
-                  role="button"
-                  data-mdb-ripple-color="dark"
-                  ><i class="fab fa-instagram"></i
-                ></a>
-          
-                <!-- Linkedin -->
-                <a
-                  class="btn btn-link btn-floating btn-lg text-dark m-1"
-                  href="#!"
-                  role="button"
-                  data-mdb-ripple-color="dark"
-                  ><i class="fab fa-linkedin"></i
-                ></a>
-                <!-- Github -->
-                
+               <!--#f02b8f   -->
+                <!--  -->
+               <div class="container">
+                <div class="row">
+                  <div class="col-md-12">
+                    <a class="  text-light m-5" href="#!" data-mdb-ripple-color="dark"
+                    ><i class="fa-brands fa-facebook btn-footer-rosa"></i> LiliPinkColombia</a>
+                    <a class="  text-light m-5" href="#!" data-mdb-ripple-color="dark"
+                      ><i class="fa-brands fa-facebook btn-footer-azul"></i> Yoicolombia</a>
+                    <a class="  text-light m-5" href="#!" data-mdb-ripple-color="dark"
+                      ><i class="fab fa-instagram btn-footer-rosa"></i> Lilipinkcol</a>
+                    <a class=" text-light m-5" href="#!" data-mdb-ripple-color="dark"
+                    ><i class="fab fa-instagram btn-footer-azul"></i> Yoi.colombia</a>
+                  </div>
+                </div>
+                <div class="row mt-4">
+                  <div class="col-md-12">
+                      <!-- Linkedin -->
+                      <a class="  text-light m-5" href="#!" data-mdb-ripple-color="dark"
+                      ><i class="fab fa-linkedin btn-footer-rosa"></i> Lili Pink & Yoi</a>
+                      <a class="  text-light m-5" href="#!" data-mdb-ripple-color="dark">
+                      <i class="fab fa-tiktok btn-footer-azul"></i> Yoi.col</a>
+                      <a class="  text-light m-5" href="#!" data-mdb-ripple-color="dark">
+                      <i class="fab fa-tiktok btn-footer-rosa"></i> Lilipink.col</a>
+                  </div>
+                </div>
+               </div>
               </section>
               <!-- Section: Social media -->
             </div>
             <!-- Grid container -->
           
             <!-- Copyright -->
-            <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            <div class="text-center text-light p-3" style="background-color: rgba(0, 0, 0, 0.2);">
               © 2020 Copyright:
-              <a class="text-dark" href="#">lilipink.com</a>
+              <a class="text-light" href="#">lilipink.com</a>
             </div>
             <!-- Copyright -->
           </footer>
@@ -73,5 +54,16 @@
 </script>
 
 <style lang="scss" scoped>
+
+  .btn-footer-rosa{
+    background-color: #f02b8f ; border-radius: 50%; padding: 0.4rem;
+  }
+  .btn-footer-azul{
+    background-color: #57b4b2  ; border-radius: 50%; padding: 0.4rem;
+  }
+  .bg-black{
+    background-color: #000000;
+  }
+
 
 </style>

@@ -16,6 +16,7 @@ class CreateCollaboratorsTable extends Migration
         Schema::create('collaborators', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            // $table->string('last_name');
             $table->string('cedula');
 
             $table->bigInteger('area_id')->unsigned()->required();

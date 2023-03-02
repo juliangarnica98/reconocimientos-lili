@@ -1,20 +1,21 @@
 <template>
     <div>
         <nav
-            class="navbar navbar-expand-lg navbar-light border-bottom fixed-top box"
-            style="background-color: #fff"
+            class="navbar navbar-dark navbar-expand-lg  box fixed-top bg-black"
+           
         >
             <a class="nav-link text-dark w-25 mx-auto text-center"   href="/">
-                <img class="w-50" :src="logo"  />
+                <img class="img-fluid" :src="logo"  style="max-width: 50%;"/>
             </a>
             <button
-                class="navbar-toggler"
+                class="navbar-toggler "
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#navbarCollapse"
                 aria-controls="navbarCollapse"
                 aria-expanded="false"
                 aria-label="Toggle navigation"
+               
             >
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -28,7 +29,7 @@
                     </li> -->
                     <li class="nav-item">
                         
-                        <a class="nav-link text-dark" href="/login"
+                        <a class="nav-link text-light" href="/login"
                             ><strong>INICIAR SESIÓN</strong></a
                         >
                     </li>                  
@@ -53,4 +54,8 @@ export default {
 .box {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
+.bg-black{
+    background-color: #000000;
+  }
+
 </style>
