@@ -5,7 +5,7 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0">
-                            Collaboradores
+                            Colaboradores activos
                         </h1>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="card card-info">
-                            <div class="card-header">
+                            <div class="card-header"  style="background-color: #e75097;">
                                 <h3 class="card-title">Búsqueda</h3>
                             </div>
                             <div class="card-body">
@@ -97,7 +97,7 @@
                                     </button>
                                     <button class="btn btn-default ml-3"
                                         @click.prevent="limpiarBsq">Limpiar</button>
-                                    <button class="btn btn-default ml-3" @click="showAlert">Hello world</button>
+                                    <!-- <button class="btn btn-default ml-3" @click="showAlert">Hello world</button> -->
                                 </div>
                             </div>
                         </div>
@@ -128,64 +128,22 @@
                                     <tbody>
                                         <tr v-for="(item,index) in listColaboradoresPag" :key="index" class="d-flex">
                                             <td v-text="item.name" class="col text-center"></td>
-                                            <!-- <td v-text="item.last_name" class="col text-center"></td> -->
-                                            <td v-text="item.cedula" class="col text-center"></td>
-                                            <td v-text="item.area_id" class="col text-center"></td>
-                                            <!-- <td class="col text-center">
-                                                <template v-if="item.state=='A'">
-                                                    <span class="badge badge-success" v-text="item.state"></span>
-                                                </template>
-                                                <template v-if="item.state=='I'">
-                                                    <span class="badge badge-success" v-text="item.state"></span>
-                                                </template>
-                                            </td> -->
-                                            <!-- <td class="col">
-                                                <router-link
-                                                    class="btn btn-primary btn-sm btn-with-25"
-                                                    :to="'/'"
-                                                >
-                                                    <i
-                                                        class="fas fa-folder"
-                                                    ></i>
-                                                    Ver
-                                                </router-link>
-                                                <router-link
-                                                    class="btn btn-info btn-sm btn-with-25"
-                                                    :to="'/'"
-                                                >
-                                                    <i
-                                                        class="fas fa-pencil-alt"
-                                                    ></i>
-                                                    Editar
-                                                </router-link>
-                                                <router-link
-                                                    class="btn btn-success btn-sm btn-with-25"
-                                                    :to="'/'"
-                                                >
-                                                    <i class="fas fa-key"></i>
-                                                    Permiso
-                                                </router-link>
-                                                <router-link
-                                                    class="btn btn-danger btn-sm btn-with-25"
-                                                    :to="'/'"
-                                                >
-                                                    <i class="fas fa-trash"></i>
-                                                    Desactivar
-                                                </router-link>
-                                                <router-link
-                                                    class="btn btn-success btn-sm btn-with-25"
-                                                    :to="'/'"
-                                                >
-                                                    <i class="fas fa-check"></i>
-                                                    Activar
-                                                </router-link>
-                                            </td> -->
+                                            <td v-text="item.cedula" class="col text-center"></td>                                            
+                                            <td  class="col text-center">
+                                            <div v-for="(area,index) in listAreas" :key="index" >
+                                                <div v-if="area.id==item.area_id">
+                                                    {{ area.name }}
+                                                </div>
+                                            </div>
+                                            </td> 
+                                                
+                                     
                                         </tr>
                                     </tbody>
                                 </table>
                                 <div class="card-footer clearfix">
                                     <ul
-                                        class="pagination pagination-sm m-0 float-right"
+                                        class="pagination pagination-sm m-0 col-md-10"
                                     >
                                         <li class="page-item" v-if="pageNumber>0">
                                             <a href="" class="page-link" @click.prevent="prevPage">Ant</a>
@@ -220,15 +178,17 @@ export default {
 
             },
             listColaboradores: [],
+            listAreas: [],
             pageNumber:0,
-            perPage:5
+            perPage:30
         };
     },
     created(){
         var url = "administrador/colaboradores/getColaboradores";
             axios.get(url).then((response) => {
                     this.inicializarPag();
-                    this.listColaboradores=response.data;
+                    this.listColaboradores=response.data.collaborators;
+                    this.listAreas=response.data.areas;
                 });
     },
     computed:{
@@ -273,8 +233,13 @@ export default {
                     }
                 })
                 .then((response) => {
+                    // this.inicializarPag();
+                    // this.listColaboradores=response.data;
+
+
                     this.inicializarPag();
-                    this.listColaboradores=response.data;
+                    this.listColaboradores=response.data.collaborators;
+                    this.listAreas=response.data.areas;
                 });
         },
         getCollaborators() {
@@ -300,4 +265,17 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+
+
+.btn-info{
+    background-color: #e75097;
+    border-color: #e75097 ;
+    color: #fff;
+}
+.btn-info:hover{
+    background-color:#ce84a6 ;
+    border-color: #ce84a6 ;
+}
+</style>

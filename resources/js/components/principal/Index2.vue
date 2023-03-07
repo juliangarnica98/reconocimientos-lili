@@ -287,8 +287,8 @@ export default {
                 { value: "Pasión por los resultados", label: "Pasión por los resultados" },
             ],
             listComportamientoPasion:[
-                { value: "Encuentra el 'cómo sí' para que las cosas sucedan. (Hace que las cosas pasen)", label: "Encuentra el 'cómo sí' para que las cosas sucedan. (Hace que las cosas pasen)" },
-                { value: "No se rinde ante los obstáculos, hace siempre el máximo esfuerzo para alcanzar las metas propias y los resultados de la compañía", label: "No se rinde ante los obstáculos, hace siempre el máximo esfuerzo para alcanzar las metas propias y los resultados de la compañía" },
+                { value: "Encuentra el 'cómo sí' para que las cosas sucedan. (Hace que las cosas pasen)", label: "Encuentra el 'cómo sí' para que las cosas sucedan. (Hace que las cosas pasen)." },
+                { value: "No se rinde ante los obstáculos, hace siempre el máximo esfuerzo para alcanzar las metas propias y los resultados de la compañía", label: "No se rinde ante los obstáculos, hace siempre el máximo esfuerzo para alcanzar las metas propias y los resultados de la compañía." },
                 { value: "Expone de manera clara los objetivos planteados a sus compañeros.", label: "Expone de manera clara los objetivos planteados a sus compañeros." },
                 { value: "Diseña y utiliza indicadores cualitativos y cuantitativos para medir y comprobar los resultados de su área.", label: "Diseña y utiliza indicadores cualitativos y cuantitativos para medir y comprobar los resultados de su área." },
                 { value: "Entiende la compañía, se adueña de los problemas de su área y busca soluciones de forma proactiva.", label: "Entiende la compañía, se adueña de los problemas de su área y busca soluciones de forma proactiva." },    
@@ -356,7 +356,10 @@ export default {
                        
                     })
                     .then((response) => {
-                        console.log("hola");
+                        Vue.swal(response.data,'', 'success');
+                        setTimeout(function(){
+                        window.location.reload();
+                        }, 4000);
                     });
                 }else{
                     Vue.swal('El mensaje es obligatorio','', 'error');

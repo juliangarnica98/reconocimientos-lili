@@ -1,8 +1,8 @@
 <template>
     <div>
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <aside class="main-sidebar elevation-0 bg-black">
             <!-- Brand Logo -->
-            <a href="/home" class="brand-link text-decoration-none">
+            <a href="/dashboard" class="brand-link text-decoration-none">
                 <!-- <img
                     :src="ruta + '/img/AdminLTElogo.png'"
                     alt="AdminLTE Logo"
@@ -37,7 +37,7 @@
                         data-accordion="false"
                     >
                         <li class="nav-item">
-                            <router-link :to="'/index'" class="nav-link ">
+                            <router-link :to="'/dashboard'" class="nav-link ">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard
@@ -162,4 +162,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.bg-black{
+    background-color: black;
+}
+</style>

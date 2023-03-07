@@ -13,17 +13,11 @@
         </div>
         <div class="content container-fluid">
             <div class="card">
-                <!-- <div class="card-header">
-                    <div class="card-tools">
-                        <router-link class="btn btn-info btn-sm" :to="'/usuarios/create'">
-                            <i class="fas fa-plus-square"></i> Nuevo usuario
-                        </router-link>
-                    </div>
-                </div> -->
+             
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="card card-info">
-                            <div class="card-header">
+                            <div class="card-header" style="background-color: #e75097;">
                                 <h3 class="card-title">Búsqueda</h3>
                             </div>
                             <div class="card-body">
@@ -44,24 +38,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <div class="col-md-4">
-                                            <div class="form-group row">
-                                                <label
-                                                    for="col-md-3 col-form-label"
-                                                    >Correo</label
-                                                >
-                                                <div class="col-md-9">
-                                                    <input
-                                                        type="text"
-                                                        class="form-control"
-                                                        v-model="
-                                                            fillBsqUsuario.sCorreo
-                                                        "
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
+                                  
+                                       <!-- <div class="col-md-4">
                                             <div class="form-group row">
                                                 <label
                                                     for="col-md-3 col-form-label"
@@ -131,58 +109,13 @@
                                     <tbody>
                                         <tr v-for="(item,index) in listReconocimientosPag" :key="index" class="d-flex">
                                             <td v-text="item.name_collaborator" class="col text-center"></td>
-                                            <td v-text="item.collaborator_id" class="col text-center"></td>
+                                            <div v-for="(colaborador,index) in listColaboradores" :key="index">
+                                                <div v-if="colaborador.id==item.collaborator_id">
+                                                    <td  v-text="colaborador.name" class="col text-center"></td>
+                                                </div>
+                                            </div>
                                             <td v-text="item.message" class="col text-center"></td>
                                             <td v-text="item.skills" class="col text-center"></td>
-                                            <!-- <td class="col text-center">
-                                                <template v-if="item.state=='A'">
-                                                    <span class="badge badge-success" v-text="item.state"></span>
-                                                </template>
-                                                <template v-if="item.state=='I'">
-                                                    <span class="badge badge-success" v-text="item.state"></span>
-                                                </template>
-                                            </td> -->
-                                            <!-- <td class="col">
-                                                <router-link
-                                                    class="btn btn-primary btn-sm btn-with-25"
-                                                    :to="'/'"
-                                                >
-                                                    <i
-                                                        class="fas fa-folder"
-                                                    ></i>
-                                                    Ver
-                                                </router-link>
-                                                <router-link
-                                                    class="btn btn-info btn-sm btn-with-25"
-                                                    :to="'/'"
-                                                >
-                                                    <i
-                                                        class="fas fa-pencil-alt"
-                                                    ></i>
-                                                    Editar
-                                                </router-link>
-                                                <router-link
-                                                    class="btn btn-success btn-sm btn-with-25"
-                                                    :to="'/'"
-                                                >
-                                                    <i class="fas fa-key"></i>
-                                                    Permiso
-                                                </router-link>
-                                                <router-link
-                                                    class="btn btn-danger btn-sm btn-with-25"
-                                                    :to="'/'"
-                                                >
-                                                    <i class="fas fa-trash"></i>
-                                                    Desactivar
-                                                </router-link>
-                                                <router-link
-                                                    class="btn btn-success btn-sm btn-with-25"
-                                                    :to="'/'"
-                                                >
-                                                    <i class="fas fa-check"></i>
-                                                    Activar
-                                                </router-link>
-                                            </td> -->
                                         </tr>
                                     </tbody>
                                 </table>
@@ -223,6 +156,7 @@ export default {
 
             },
             listReconocimientos: [],
+            listColaboradores:[],
             pageNumber:0,
             perPage:5
         };
@@ -230,8 +164,11 @@ export default {
     created(){
         var url = "administrador/reconocimientos/getReconocimientos";
             axios.get(url).then((response) => {
+
+                // console.log(response);
                     this.inicializarPag();
-                    this.listReconocimientos=response.data;
+                    this.listReconocimientos=response.data.recognitions;
+                    this.listColaboradores=response.data.collaborators;
                 });
     },
     computed:{
@@ -271,13 +208,18 @@ export default {
             axios
                 .get(url, {
                     params: {
-                        sbusqueda: this.fillBsqUsuario.sbusqueda,
-                                        
+                        sbusqueda: this.fillBsqUsuario.sbusqueda,             
                     }
                 })
                 .then((response) => {
                     this.inicializarPag();
-                    this.listReconocimientos=response.data;
+                    console.log(response);
+                    this.listReconocimientos=response.data.recognitions;
+                    this.listColaboradores=response.data.collaborators;
+                }).catch((error)=>{
+                    this.listReconocimientos="";
+                    this.listColaboradores="";
+                    Vue.swal('No se encuentra reconocido','', 'error');
                 });
         },
         getCollaborators() {
@@ -299,4 +241,15 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+
+.btn-info{
+    background-color: #e75097;
+    border-color: #e75097 ;
+    color: #fff;
+}
+.btn-info:hover{
+    background-color:#ce84a6 ;
+    border-color: #ce84a6 ;
+}</style>

@@ -18,7 +18,11 @@ class CreateCollaboratorsTable extends Migration
             $table->string('name');
             // $table->string('last_name');
             $table->string('cedula');
-
+            $table->Integer('votes')->default(0);
+            $table->Integer('participation')->default(0);
+            $table->Integer('intentos')->default(0);
+            $table->Integer('state')->default(1);
+            
             $table->bigInteger('area_id')->unsigned()->required();
             $table->foreign('area_id')->references('id')->on('areas');
 

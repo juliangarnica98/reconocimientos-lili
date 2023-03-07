@@ -22,7 +22,7 @@ class AreaSeeder extends Seeder
             'name' => 'ADMINISTRATIVO'
             ]
             ,[
-            'name' => 'TIENDA'
+            'name' => 'COMERCIAL'
             ]
         ];
         foreach ($data as $areas) {

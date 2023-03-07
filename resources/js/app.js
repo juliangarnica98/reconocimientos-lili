@@ -11,10 +11,12 @@ window.Vue = require('vue').default;
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import VueSweetalert2 from 'vue-sweetalert2';
-// import { ElNotification } from 'element-plus';
+import VueApexCharts from 'vue-apexcharts'
 
+window.Vue.use(VueApexCharts)
 window.Vue.use(ElementUI);
 window.Vue.use(VueSweetalert2);
+// window.Vue.use(ApexCharts);
 // window.Vue.use(ElNotification);
 
 
@@ -29,7 +31,7 @@ window.Vue.use(VueSweetalert2);
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-
+Vue.component('apexchart', VueApexCharts);
 Vue.component('app-component', require('./components/App.vue').default);
 Vue.component('index-component', require('./components/PageInit.vue').default);
 Vue.component('login-component', require('./components/auth/Login.vue').default);

@@ -10,13 +10,25 @@ use Illuminate\Http\Request;
 class IndexController extends Controller
 {
     public function setReconocimineto(Request $request){
+
+        $colaborador2=Collaborator::where('name','LIKE','%'.$request->nombre_colaborador.'%')->first();
+        if($colaborador2->intentos==3){
+            return response()->json('¡Ya competaste tus intentos de reconocimiento!');
+        }
+        $colaborador2->participation=1;
+        $colaborador2->intentos=$colaborador2->intentos+1;
+        $colaborador2->save();
         $colaborador=Collaborator::where('name','LIKE','%'.$request->colaborador.'%')->first();
+        $colaborador->votes=$colaborador->votes+1;
+        $colaborador->save();
         $recognition= new Recognition();
         $recognition->hehaviors=str_replace ( "." , " / " , implode( $request->ListComportamientos));
         $recognition->message=$request->mensaje;
         $recognition->skills=$request->competencia;
         $recognition->name_collaborator=$request->nombre_colaborador;
         $colaborador->recognitions()->save($recognition);
+
+        return response()->json('¡Gracias por tu reconocimiento!');
 
         
     }

@@ -26,6 +26,11 @@ Route::post('/reconocimiento/setReconocimineto', [App\Http\Controllers\IndexCont
 Route::get('/reconocimiento/setColaborador', [App\Http\Controllers\IndexController::class, 'getColaborador']);
 Route::get('reconocimiento/getColaboradores', [App\Http\Controllers\IndexController::class, 'getColaboradores']);
 
+Route::get('reconocimiento/getParticipacion', [App\Http\Controllers\Administracion\DashboardController::class, 'getParticipacion']);
+Route::get('/colaboradores/getReconocidos', [App\Http\Controllers\Administracion\DashboardController::class, 'getReconocidos']);
+
+
+
 
 
 Route::get('/', function () {

@@ -11,6 +11,12 @@
                         <li class="breadcrumb-item active">Dashboard v1</li>
                     </ol>
                 </div> -->
+                
+            </div>
+            <div class="row mt-5">
+                <div class="col-sm-12">
+                    <h1 class="text-center">Módulo en desarrollo</h1>
+                </div>
             </div>
         </div>
     </div>
