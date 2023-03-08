@@ -12,12 +12,16 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import VueSweetalert2 from 'vue-sweetalert2';
 import VueApexCharts from 'vue-apexcharts'
+// import  Bootstrap5Pagination  from 'laravel-vue-pagination';
+
 
 window.Vue.use(VueApexCharts)
 window.Vue.use(ElementUI);
 window.Vue.use(VueSweetalert2);
 // window.Vue.use(ApexCharts);
 // window.Vue.use(ElNotification);
+
+
 
 
 /**
@@ -37,6 +41,11 @@ Vue.component('index-component', require('./components/PageInit.vue').default);
 Vue.component('login-component', require('./components/auth/Login.vue').default);
 Vue.component('navbar-component', require('./components/principal/Navbar.vue').default);
 Vue.component('footer-component', require('./components/principal/Footer.vue').default);
+Vue.component('pagination', require('./components/Pagination.vue').default);
+
+
+
+// Vue.component('pagination', require('laravel-vue-pagination'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

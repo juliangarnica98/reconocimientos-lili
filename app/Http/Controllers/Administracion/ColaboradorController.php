@@ -21,19 +21,19 @@ class ColaboradorController extends Controller
        
         $areas=Area::all();
         
-        return response()->json(['collaborators'=>$collaborators,'areas'=>$areas]);
+        return ['collaborators'=>$collaborators,'areas'=>$areas];
+        // return response()->json(['collaborators'=>$collaborators,'areas'=>$areas]);
     }
     //funcion para listar busqueda colaboradores
     public function getListCollaborators(Request $request){
         
         $busqueda=trim($request->sbusqueda);        
         
-        $collaborators = DB::table('collaborators')
-                            ->select('name','cedula','area_id')
+        $collaborators = Collaborator::select('name','cedula','area_id')
                             ->where('name','LIKE','%'.$busqueda.'%')->where('state',1)
                             ->orWhere('cedula','LIKE','%'.$busqueda.'%')
                             ->orderBy('name','asc')
-                            ->paginate(10); 
+                            ->paginate(); 
                           
         
         $areas=Area::all();

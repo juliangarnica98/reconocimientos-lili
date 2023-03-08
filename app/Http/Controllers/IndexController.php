@@ -6,6 +6,7 @@ use App\Models\Area;
 use App\Models\Collaborator;
 use App\Models\Recognition;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class IndexController extends Controller
 {
@@ -24,6 +25,9 @@ class IndexController extends Controller
         $recognition= new Recognition();
         $recognition->hehaviors=str_replace ( "." , " / " , implode( $request->ListComportamientos));
         $recognition->message=$request->mensaje;
+
+        $recognition->mes_actual=Carbon::now()->format('m');
+        
         $recognition->skills=$request->competencia;
         $recognition->name_collaborator=$request->nombre_colaborador;
         $colaborador->recognitions()->save($recognition);

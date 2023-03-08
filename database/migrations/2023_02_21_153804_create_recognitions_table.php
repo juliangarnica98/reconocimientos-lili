@@ -21,6 +21,7 @@ class CreateRecognitionsTable extends Migration
             $table->string('skills');
 
             $table->string('name_collaborator');
+            $table->string('mes_actual');
 
             $table->bigInteger('collaborator_id')->unsigned()->required();
             $table->foreign('collaborator_id')->references('id')->on('collaborators');

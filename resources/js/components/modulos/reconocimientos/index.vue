@@ -107,7 +107,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="(item,index) in listReconocimientosPag" :key="index" class="d-flex">
+                                        <tr v-for="(item,index) in listReconocimientos.data" :key="index" class="d-flex">
                                             <td v-text="item.name_collaborator" class="col text-center"></td>
                                             <div v-for="(colaborador,index) in listColaboradores" :key="index">
                                                 <div v-if="colaborador.id==item.collaborator_id">
@@ -120,20 +120,13 @@
                                     </tbody>
                                 </table>
                                 <div class="card-footer clearfix">
-                                    <ul
-                                        class="pagination pagination-sm m-0 float-right"
-                                    >
-                                        <li class="page-item" v-if="pageNumber>0">
-                                            <a href="" class="page-link" @click.prevent="prevPage">Ant</a>
-                                        </li>
-                                        <li class="page-item " v-for="(page,index) in pagelist" :key="index"
-                                        :class="[page==pageNumber ? 'active':'']">
-                                            <a href="" class="page-link" @click.prevent="selectPage(page)">{{ page+1 }}</a>
-                                        </li>
-                                        <li class="page-item" v-if="pageNumber < pageCount-1">
-                                            <a href="" class="page-link" @click.prevent="nextPage">Sig</a>
-                                        </li>
-                                    </ul>
+
+                                    <pagination v-if="pagination.last_page > 1" 
+                                        :pagination="pagination" 
+                                        :offset="7" 
+                                        @paginate="getRecognitions()">
+                                    </pagination>
+                                  
                                 </div>
                             </div>
                         </div>
@@ -157,44 +150,16 @@ export default {
             },
             listReconocimientos: [],
             listColaboradores:[],
-            pageNumber:0,
-            perPage:5
+            pagination: {
+                current_page: 1,
+                last_page :0
+            },
         };
     },
     created(){
-        var url = "administrador/reconocimientos/getReconocimientos";
-            axios.get(url).then((response) => {
+        this.getRecognitions();
+    },
 
-                // console.log(response);
-                    this.inicializarPag();
-                    this.listReconocimientos=response.data.recognitions;
-                    this.listColaboradores=response.data.collaborators;
-                });
-    },
-    computed:{
-        pageCount(){
-            let a = this.listReconocimientos.length,
-                b = this.perPage;
-            return Math.ceil(a/b);
-        },
-        listReconocimientosPag(){
-            let inicio = this.pageNumber*this.perPage;
-            let    fin    = inicio+this.perPage;
-            return this.listReconocimientos.slice(inicio,fin);
-        },
-        pagelist(){
-            let a = this.listReconocimientos.length,
-                b = this.perPage,
-                c = Math.ceil(a/b),
-                count = 0,
-                pagesArray = [];
-            while (count < this.pageCount){
-                pagesArray.push(count);
-                count++;
-            }
-            return pagesArray;
-        },
-    },
     methods: {
         limpiarBsq() {
             (this.fillBsqUsuario.sbusqueda = "")
@@ -204,6 +169,9 @@ export default {
             this.listReconocimientos = [];
         },
         getListRecognitions() {
+            if(this.fillBsqUsuario.sbusqueda == ""){
+                window.location.reload();
+            }
             var url = "administrador/reconocimientos/getListReconocimientos";
             axios
                 .get(url, {
@@ -212,31 +180,28 @@ export default {
                     }
                 })
                 .then((response) => {
-                    this.inicializarPag();
-                    console.log(response);
+                    // this.inicializarPag();
+                    // console.log(response);
                     this.listReconocimientos=response.data.recognitions;
                     this.listColaboradores=response.data.collaborators;
+                    this.pagination.last_page=1;
                 }).catch((error)=>{
                     this.listReconocimientos="";
                     this.listColaboradores="";
                     Vue.swal('No se encuentra reconocido','', 'error');
                 });
         },
-        getCollaborators() {
-            
+        getRecognitions() {
+            var url = "administrador/reconocimientos/getReconocimientos?page="+this.pagination.current_page;
+            // var url = 'administrador/colaboradores/getColaboradores?page='+this.pagination.current_page;
+            axios.get(url).then((response) => {
+
+                    this.listReconocimientos=response.data.recognitions;
+                    this.listColaboradores=response.data.collaborators;
+                    this.pagination.last_page=response.data.recognitions.last_page
+                });
         },
-        nextPage(){
-            this.pageNumber++;
-        },
-        prevPage(){
-            this.pageNumber--;
-        },
-        selectPage(page){
-            this.pageNumber=page;
-        },
-        inicializarPag(){
-            this.pageNumber = 0;
-        }
+
     },
 };
 </script>

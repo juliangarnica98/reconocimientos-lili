@@ -97,14 +97,11 @@
                                     </button>
                                     <button class="btn btn-default ml-3"
                                         @click.prevent="limpiarBsq">Limpiar</button>
-                                    <!-- <button class="btn btn-default ml-3" @click="showAlert">Hello world</button> -->
+                                   
                                 </div>
                             </div>
                         </div>
                         <div class="card card-info">
-                            <!-- <div class="card-header">
-                                <h3 class="card-title">Resultados</h3>
-                            </div> -->
                             <div class="card-body table-responsive">
                                 <table
                                     class="table table-hover table-head-fixed text-nowrap"
@@ -114,9 +111,6 @@
                                             <th class="col text-center">
                                                 Nombre
                                             </th>
-                                            <!-- <th class="col text-center">
-                                                Apellido
-                                            </th> -->
                                             <th class="col text-center">
                                                 Documento
                                             </th>
@@ -126,7 +120,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="(item,index) in listColaboradoresPag" :key="index" class="d-flex">
+                                        <tr v-for="(item,index) in listColaboradores.data" :key="index" class="d-flex">
                                             <td v-text="item.name" class="col text-center"></td>
                                             <td v-text="item.cedula" class="col text-center"></td>                                            
                                             <td  class="col text-center">
@@ -136,26 +130,15 @@
                                                 </div>
                                             </div>
                                             </td> 
-                                                
-                                     
                                         </tr>
                                     </tbody>
                                 </table>
                                 <div class="card-footer clearfix">
-                                    <ul
-                                        class="pagination pagination-sm m-0 col-md-10"
-                                    >
-                                        <li class="page-item" v-if="pageNumber>0">
-                                            <a href="" class="page-link" @click.prevent="prevPage">Ant</a>
-                                        </li>
-                                        <li class="page-item " v-for="(page,index) in pagelist" :key="index"
-                                        :class="[page==pageNumber ? 'active':'']">
-                                            <a href="" class="page-link" @click.prevent="selectPage(page)">{{ page+1 }}</a>
-                                        </li>
-                                        <li class="page-item" v-if="pageNumber < pageCount-1">
-                                            <a href="" class="page-link" @click.prevent="nextPage">Sig</a>
-                                        </li>
-                                    </ul>
+                                    <pagination v-if="pagination.last_page > 1" 
+                                        :pagination="pagination" 
+                                        :offset="7" 
+                                        @paginate="getCollaborators()">
+                                    </pagination>
                                 </div>
                             </div>
                         </div>
@@ -168,6 +151,8 @@
 
 <script>
 import axios from "axios";
+// import pagination from 'laravel-vue-pagination'
+// Vue.component('pagination', require('laravel-vue-pagination'));
 
 export default {
     data() {
@@ -179,42 +164,40 @@ export default {
             },
             listColaboradores: [],
             listAreas: [],
-            pageNumber:0,
-            perPage:30
+            pagination: {
+                current_page: 1,
+                last_page :0
+            },
         };
     },
     created(){
-        var url = "administrador/colaboradores/getColaboradores";
-            axios.get(url).then((response) => {
-                    this.inicializarPag();
-                    this.listColaboradores=response.data.collaborators;
-                    this.listAreas=response.data.areas;
-                });
+
+        this.getCollaborators();
     },
-    computed:{
-        pageCount(){
-            let a = this.listColaboradores.length,
-                b = this.perPage;
-            return Math.ceil(a/b);
-        },
-        listColaboradoresPag(){
-            let inicio = this.pageNumber*this.perPage;
-            let    fin    = inicio+this.perPage;
-            return this.listColaboradores.slice(inicio,fin);
-        },
-        pagelist(){
-            let a = this.listColaboradores.length,
-                b = this.perPage,
-                c = Math.ceil(a/b),
-                count = 0,
-                pagesArray = [];
-            while (count < this.pageCount){
-                pagesArray.push(count);
-                count++;
-            }
-            return pagesArray;
-        },
-    },
+    // computed:{
+    //     pageCount(){
+    //         let a = this.listColaboradores.length,
+    //             b = this.perPage;
+    //         return Math.ceil(a/b);
+    //     },
+    //     listColaboradoresPag(){
+    //         let inicio = this.pageNumber*this.perPage;
+    //         let    fin    = inicio+this.perPage;
+    //         return this.listColaboradores.slice(inicio,fin);
+    //     },
+    //     pagelist(){
+    //         let a = this.listColaboradores.length,
+    //             b = this.perPage,
+    //             c = Math.ceil(a/b),
+    //             count = 0,
+    //             pagesArray = [];
+    //         while (count < this.pageCount){
+    //             pagesArray.push(count);
+    //             count++;
+    //         }
+    //         return pagesArray;
+    //     },
+    // },
     methods: {
         limpiarBsq() {
             (this.fillBsqUsuario.sbusqueda = "")
@@ -224,7 +207,11 @@ export default {
             this.listColaboradores = [];
         },
         getListCollaborators() {
-            var url = "administrador/colaboradores/getListColaboradores";
+            if(this.fillBsqUsuario.sbusqueda == ""){
+                window.location.reload();
+            }
+
+            var url = 'administrador/colaboradores/getListColaboradores';
             axios
                 .get(url, {
                     params: {
@@ -233,33 +220,20 @@ export default {
                     }
                 })
                 .then((response) => {
-                    // this.inicializarPag();
-                    // this.listColaboradores=response.data;
-
-
-                    this.inicializarPag();
                     this.listColaboradores=response.data.collaborators;
                     this.listAreas=response.data.areas;
+                    this.pagination.last_page=1;
                 });
         },
         getCollaborators() {
+            var url = 'administrador/colaboradores/getColaboradores?page='+this.pagination.current_page;
+            axios.get(url).then((response) => {
+                    console.log(response.data.collaborators.last_page);
+                    this.listColaboradores=response.data.collaborators;
+                    this.listAreas=response.data.areas;
+                    this.pagination.last_page=response.data.collaborators.last_page
+                });
             
-        },
-        nextPage(){
-            this.pageNumber++;
-        },
-        prevPage(){
-            this.pageNumber--;
-        },
-        selectPage(page){
-            this.pageNumber=page;
-        },
-        inicializarPag(){
-            this.pageNumber = 0;
-        },
-        showAlert() {
-        // Use sweetalert2
-            this.$swal('Hello Vue world!!!');
         },
     },
 };

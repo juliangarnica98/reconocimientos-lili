@@ -146,45 +146,9 @@ export default {
         reconocido_admin:"",
         reconocido_cedi:"",
 
-        // admin_si:0,
-        // admin_no:100,
-        // cedi_si:0,
-        // cedi_no:100,
-        // comercial_si:0,
-        // comercial_no:100,
-
-
-        series: [{
-              name: "Desktops",
-              data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
-        }],
+        series: [
+      ],
         chartOptions: {
-            chart: {
-              height: 350,
-              type: 'line',
-              zoom: {
-                enabled: false
-              }
-            },
-            dataLabels: {
-              enabled: false
-            },
-            stroke: {
-              curve: 'straight'
-            },
-            title: {
-              text: 'Product Trends by Month',
-              align: 'center'
-            },
-            grid: {
-              row: {
-                colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                opacity: 0.5
-              },
-            },
-            xaxis: {
-              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-            }
         },
         
         ParAd: [], 
@@ -286,6 +250,48 @@ export default {
               var comercial_si=response.data.si_comercial;
               var comercial_no=100-response.data.si_comercial;
               this.ParCo =[comercial_si,comercial_no];
+
+                });
+
+            var url3 = "/colaboradores/getReconocimientosMes";
+            axios.get(url3).then((response) => {
+             
+              // this.series.data=response.data.values;
+              // this.chartOptions.xaxis.categories=response.data.meses;
+              this.series =[
+              {
+                    name: "Reconocimiento",
+                    data: response.data.values
+              }
+              ],
+              this.chartOptions= {
+              chart: {
+                height: 350,
+                type: 'line',
+                zoom: {
+                  enabled: false
+                }
+              },
+              dataLabels: {
+                enabled: false
+              },
+              stroke: {
+                curve: 'straight'
+              },
+              title: {
+                text: 'Total reconocimientos por mes',
+                align: 'center'
+              },
+              grid: {
+                row: {
+                  colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                  opacity: 0.5
+                },
+              },
+              xaxis: {
+                categories:response.data.meses ,
+              }
+        }
 
                 });
     },

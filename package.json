@@ -27,6 +27,8 @@
         "@photo-sphere-viewer/core": "^5.1.1",
         "apexcharts": "^3.37.1",
         "element-ui": "^2.15.13",
+        "laravel-vue-pagination": "^4.0.0",
+        "shetabit-laravel-vue-pagination": "^2.3.7",
         "vue-apexcharts": "^1.6.2",
         "vue-router": "^3.6.5",
         "vue-sweetalert2": "^5.0.5"

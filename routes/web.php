@@ -29,6 +29,8 @@ Route::get('reconocimiento/getColaboradores', [App\Http\Controllers\IndexControl
 Route::get('reconocimiento/getParticipacion', [App\Http\Controllers\Administracion\DashboardController::class, 'getParticipacion']);
 Route::get('/colaboradores/getReconocidos', [App\Http\Controllers\Administracion\DashboardController::class, 'getReconocidos']);
 
+Route::get('/colaboradores/getReconocimientosMes', [App\Http\Controllers\Administracion\DashboardController::class, 'getReconocimientosMes']);
+
 
 
 

@@ -11,9 +11,11 @@ use Illuminate\Support\Facades\DB;
 class RecognitionController extends Controller
 {
     public function getRecognitions(){
-        $recognitions = Recognition::with('Collaborators')->get();
-        $collaborators=Collaborator::get();
-        return response()->json(['recognitions'=> $recognitions,'collaborators'=>$collaborators]);
+        $recognitions = Recognition::with('Collaborators')->paginate(10);
+        
+        $collaborators=Collaborator::all();
+        return ['recognitions'=>$recognitions,'collaborators'=>$collaborators];
+        // return response()->json(['recognitions'=> $recognitions,'collaborators'=>$collaborators]);
         // return response()->json(['item_image ' => $item_image, 'item_something' => $item_something, 'item_more' => $item_more  ]);
     }
     //funcion para listar busqueda colaboradores
@@ -25,9 +27,8 @@ class RecognitionController extends Controller
             ->where('name','LIKE','%'.$busqueda.'%')
             ->first(); 
             
-        $recognitions = Recognition::where('collaborator_id',$colaborador->id)->get(); 
-        // dd($recognitions);
-        $collaborators=Collaborator::get();
+        $recognitions = Recognition::where('collaborator_id',$colaborador->id)->paginate(); 
+        $collaborators=Collaborator::all();
         return response()->json(['recognitions'=> $recognitions,'collaborators'=>$collaborators]);
     }
 }

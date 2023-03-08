@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Administracion;
 use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\Collaborator;
+use App\Models\Recognition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -48,6 +50,34 @@ class DashboardController extends Controller
 
         return response()->json(['si_cedi'=> $si_cedi,'si_admin'=>$si_admin,'si_comercial'=>$si_comercial]);
         
+    }
+    public function getReconocimientosMes(){
+        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+        
+        $reconocimientos= Recognition::where('mes_actual',Carbon::now()->format('m'))->get();
+        $count_reconocimientos=count($reconocimientos);
+        $mes_reconocimientos=$meses[(int)Carbon::now()->format('m')-1];
+        
+        $reconocimientos_1= Recognition::where('mes_actual',Carbon::now()->subMonth()->format('m'))->get();
+        $count_reconocimientos1=count($reconocimientos_1);
+        $mes_reconocimientos1=$meses[(int)Carbon::now()->subMonth()->format('m')-1];
 
+        $reconocimientos_2= Recognition::where('mes_actual',Carbon::now()->subMonth(2)->format('m'))->get();
+        $count_reconocimientos2=count($reconocimientos_2);
+        $mes_reconocimientos2=$meses[(int)Carbon::now()->subMonth(2)->format('m')-1];
+
+        $reconocimientos_3= Recognition::where('mes_actual',Carbon::now()->subMonth(3)->format('m'))->get();
+        $count_reconocimientos3=count($reconocimientos_3);
+        $mes_reconocimientos3=$meses[(int)Carbon::now()->subMonth(3)->format('m')-1];
+
+        $reconocimientos_4= Recognition::where('mes_actual',Carbon::now()->subMonth(4)->format('m'))->get();
+        $count_reconocimientos4=count($reconocimientos_4);
+        $mes_reconocimientos4=$meses[(int)Carbon::now()->subMonth(4)->format('m')-1];
+     
+        $meses_response=[$mes_reconocimientos4,$mes_reconocimientos3,$mes_reconocimientos2,$mes_reconocimientos1,$mes_reconocimientos];
+        $values_response=[$count_reconocimientos4,$count_reconocimientos3,$count_reconocimientos2,$count_reconocimientos1,$count_reconocimientos];
+        
+        // return ['meses'=>$meses_response,'values'=>$values_response];
+        return response()->json(['meses'=>$meses_response,'values'=>$values_response]);
     }
 }
